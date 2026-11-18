@@ -22,18 +22,31 @@ Internet is used only to download a voice once (Voices screen); after that every
 - Language auto-detection (FB2 `<lang>` tag, otherwise script/stop-word heuristics).
 
 ## Build
-Requires Android SDK (compileSdk 36) and JDK 17–21 (`org.gradle.java.home` in `gradle.properties` points to a local JDK 21 — adjust or remove).
+Requires the Android SDK (compileSdk 36) and an installed **JDK 21** — Gradle picks it automatically
+(`gradle/gradle-daemon-jvm.properties`); AGP 9 does not run on newer JDKs yet.
 
 ```
 ./gradlew testDebugUnitTest   # parser / text-pipeline tests
-./gradlew assembleRelease     # app/build/outputs/apk/release/app-release.apk (~38 MB, arm64 phones, R8-shrunk)
-./gradlew assembleDebug       # app/build/outputs/apk/debug/app-debug.apk (arm64 + x86_64 emulator, unshrunk)
-./gradlew -Pemulator assembleRelease   # release build that also runs on an x86_64 emulator
+./gradlew assembleRelease     # app/build/outputs/apk/release/app-<abi>-release.apk  (arm64 ≈ 40 MB)
+./gradlew bundleRelease       # app/build/outputs/bundle/release/app-release.aab     (for Google Play)
+./gradlew assembleDebug       # per-ABI debug APKs; use app-x86_64-debug.apk on the emulator
 ```
-The release APK is signed with the local debug key so it installs directly; use a proper signing key before publishing.
+Run bundle and APK tasks as separate commands (APK splits are switched off for bundle builds).
+Release signing: see [docs/PLAY_RELEASE.md](docs/PLAY_RELEASE.md) (`keystore.properties`, git-ignored); without it
+release builds are debug-signed. Application ID: `io.github.novikovpv.booktts`.
+
 The sherpa-onnx AAR (~48 MB) is downloaded from GitHub releases into `app/libs/` on first build (git-ignored).
 
 **Note:** sherpa-onnx is pinned to **1.13.8** — version 2.x removed the built-in espeak-ng phonemizer that Piper voices require.
+
+## Licences
+Source code: MIT (`LICENSE`). The built app includes espeak-ng (GPL-3.0) via sherpa-onnx, so the distributed app
+is covered by GPL-3.0. Voice licences and credits are listed in `app/src/main/assets/voices.json` and shown in the
+app's *About* dialog. Privacy policy: [PRIVACY.md](PRIVACY.md).
+
+## Tools
+- `tools/store_graphics.py` — regenerates the Play icon and feature graphic in `docs/store/`.
+- `tools/ru-stress/` — builds the improved Russian espeak dictionary (`app/src/main/assets/ru/ru_dict`).
 
 ## Layout (`app/src/main/java/app/booktts/`)
 - `parse/` — TxtParser (charset detection, chapter headings), Fb2Parser, PdfParser (bookmarks → chapters)

@@ -1,4 +1,5 @@
 import java.net.URI
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -18,34 +19,62 @@ if (!sherpaAar.exists()) {
         .toURL().openStream().use { input -> sherpaAar.outputStream().use { input.copyTo(it) } }
 }
 
+// Release signing comes from keystore.properties (git-ignored) or BOOKTTS_* environment variables.
+// Without them, release builds fall back to the debug key: fine for your own phone, rejected by Play.
+val keystoreProps = Properties().apply {
+    val f = rootProject.file("keystore.properties")
+    if (f.isFile) f.inputStream().use { load(it) }
+}
+fun signingValue(key: String, env: String): String? = keystoreProps.getProperty(key) ?: System.getenv(env)
+val releaseStore = signingValue("storeFile", "BOOKTTS_STORE_FILE")
+
 android {
     namespace = "app.booktts"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "app.booktts"
+        // Permanent Play Store identity; the Kotlin package (namespace) can stay app.booktts.
+        applicationId = "io.github.novikovpv.booktts"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "0.1.0"
     }
 
-    buildTypes {
-        debug {
-            // phones + the x86_64 emulator
-            ndk { abiFilters += listOf("arm64-v8a", "x86_64") }
+    // One APK per processor type for sideloading (app-arm64-v8a-release.apk ≈ 40 MB).
+    // App Bundles for Google Play ignore this; Play delivers the right libraries per device anyway.
+    splits {
+        abi {
+            // AGP can't build bundles with splits on (issuetracker 402800800), so only for APK builds.
+            isEnable = gradle.startParameter.taskNames.none { it.contains("bundle", ignoreCase = true) }
+            reset()
+            include("arm64-v8a", "armeabi-v7a", "x86_64")
+            isUniversalApk = false
         }
-        release {
-            // Modern phones only. `-Pemulator` adds x86_64 to test the release build on an emulator.
-            ndk {
-                abiFilters += "arm64-v8a"
-                if (project.hasProperty("emulator")) abiFilters += "x86_64"
+    }
+
+    signingConfigs {
+        if (releaseStore != null) {
+            create("release") {
+                storeFile = file(releaseStore)
+                storePassword = signingValue("storePassword", "BOOKTTS_STORE_PASSWORD")
+                keyAlias = signingValue("keyAlias", "BOOKTTS_KEY_ALIAS")
+                keyPassword = signingValue("keyPassword", "BOOKTTS_KEY_PASSWORD")
             }
+        }
+    }
+
+    buildTypes {
+        release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            // Signed with the local debug key so it installs without extra setup; use a real key for Play.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = if (releaseStore != null) {
+                signingConfigs.getByName("release")
+            } else {
+                logger.warn("keystore.properties not found: release is signed with the DEBUG key (not accepted by Google Play)")
+                signingConfigs.getByName("debug")
+            }
         }
     }
 
@@ -60,6 +89,8 @@ android {
 
     packaging {
         jniLibs.useLegacyPackaging = false
+        // Phones (arm64, older 32-bit ARM) and the x86_64 emulator; 32-bit x86 devices are practically gone.
+        jniLibs.excludes += "lib/x86/**"
         resources.excludes += listOf("META-INF/DEPENDENCIES", "META-INF/LICENSE*", "META-INF/NOTICE*")
     }
 

@@ -59,4 +59,11 @@
     <string name="ru_stress_dict_title">Улучшенные ударения (Piper)</string>
     <string name="ru_stress_dict_hint">Исправляет ударения в менее частых словоформах (сту́кайте, недо́сланного) с помощью улучшенного словаря произношения. Слова с двумя возможными ударениями (за́мок/замо́к) не меняются.</string>
     <string name="restart_to_apply">Перезапустите приложение, чтобы применить изменение.</string>
+    <string name="about">О программе</string>
+    <string name="source_code">Исходный код (GitHub)</string>
+    <string name="about_text">Читает книги вслух полностью на устройстве. Открытый исходный код под лицензией MIT; приложение в целом содержит espeak-ng и поэтому распространяется на условиях GNU GPL v3.</string>
+    <string name="about_privacy_title">Конфиденциальность</string>
+    <string name="about_privacy">Приложение не собирает данные, в нём нет рекламы и аналитики. Книги не покидают устройство. Интернет нужен только для загрузки голосов.</string>
+    <string name="about_components">Открытые компоненты</string>
+    <string name="about_voices">Установленные голоса</string>
 </resources>

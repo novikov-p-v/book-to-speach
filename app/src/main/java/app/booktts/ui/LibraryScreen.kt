@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -69,6 +70,7 @@ fun LibraryScreen(
     val snackbar = remember { SnackbarHostState() }
     var importing by remember { mutableStateOf(false) }
     var toDelete by remember { mutableStateOf<Book?>(null) }
+    var showAbout by remember { mutableStateOf(false) }
 
     fun import(uri: Uri) {
         importing = true
@@ -106,6 +108,9 @@ fun LibraryScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.library)) },
                 actions = {
+                    IconButton(onClick = { showAbout = true }) {
+                        Icon(Icons.Default.Info, contentDescription = stringResource(R.string.about))
+                    }
                     IconButton(onClick = onVoices) {
                         Icon(AppIcons.RecordVoiceOver, contentDescription = stringResource(R.string.voices))
                     }
@@ -147,6 +152,8 @@ fun LibraryScreen(
             }
         }
     }
+
+    if (showAbout) AboutDialog(onDismiss = { showAbout = false })
 
     toDelete?.let { book ->
         AlertDialog(

@@ -153,7 +153,7 @@ fun VoicesScreen(onBack: () -> Unit) {
             item {
                 SectionHeader(stringResource(R.string.ru_pronunciation))
                 YoRow()
-                StressDictRow()
+                if (c.espeakPatch.available) StressDictRow()
             }
 
             if (installed.any { it.type == ModelType.SUPERTONIC }) {
@@ -239,6 +239,7 @@ private fun ModelRow(m: CatalogModel, isInstalled: Boolean, works: List<WorkInfo
             Text(m.name.removePrefix("Piper "), style = MaterialTheme.typography.bodyLarge)
             val details = buildString {
                 append("${m.sizeBytes / 1_000_000} MB")
+                if (m.license.isNotEmpty()) append(" · ").append(m.license)
                 if (m.speakers.isNotEmpty()) append(" · ${m.speakers.size} ").append(context.getString(R.string.speakers))
             }
             val sub = when {

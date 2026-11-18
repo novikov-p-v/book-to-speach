@@ -59,4 +59,11 @@
     <string name="ru_stress_dict_title">Better Russian stress (Piper)</string>
     <string name="ru_stress_dict_hint">Fixes stress in less common word forms (сту́кайте, недо́сланного) using an improved pronunciation dictionary. Words with two possible stresses (за́мок/замо́к) are not changed.</string>
     <string name="restart_to_apply">Restart the app to apply this change.</string>
+    <string name="about">About</string>
+    <string name="source_code">Source code (GitHub)</string>
+    <string name="about_text">Reads books aloud entirely on your device. Open source: the source code is MIT-licensed; the app as distributed includes espeak-ng and is therefore covered by the GNU GPL v3.</string>
+    <string name="about_privacy_title">Privacy</string>
+    <string name="about_privacy">The app collects no data and has no ads or analytics. Your books never leave the device. The internet is used only when you download a voice.</string>
+    <string name="about_components">Open-source components</string>
+    <string name="about_voices">Installed voices</string>
 </resources>

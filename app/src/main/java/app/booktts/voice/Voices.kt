@@ -46,8 +46,11 @@ data class CatalogModel(
     val sha256: String = "",
     /** Empty = single-speaker model (sid 0). */
     val speakers: List<Speaker> = emptyList(),
+    /** Licence of the model / its training data, and the credit it requires (shown in About). */
+    val license: String = "",
+    val credit: String = "",
 ) {
-    val meta get() = ModelMeta(id, type, langs, name, speakers)
+    val meta get() = ModelMeta(id, type, langs, name, speakers, license, credit)
 }
 
 /** Stored next to an installed model as voice.json. */
@@ -58,6 +61,8 @@ data class ModelMeta(
     val langs: List<String>,
     val name: String,
     val speakers: List<Speaker> = emptyList(),
+    val license: String = "",
+    val credit: String = "",
 )
 
 /** A model extracted on the device, with resolved file paths. */

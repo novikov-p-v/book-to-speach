@@ -12,6 +12,8 @@ object TxtParser {
         """^\s*(глава|chapter|часть|part|книга|book|пролог|эпилог|prologue|epilogue|розділ|kapitel|chapitre|capítulo|capitolo|rozdział)(?!\p{L}).{0,80}$""",
         RegexOption.IGNORE_CASE,
     )
+    /** Project Gutenberg marks italics as _word_ in plain text. */
+    private val ITALIC_UNDERSCORES = Regex("""(?<![\p{L}\d])_([^_\n]{1,200}?)_(?![\p{L}\d])""")
     private val numberHeadingRegex = Regex("""^\s*([IVXLC]{1,7}|\d{1,3})\.?\s*$""")
 
     fun decode(bytes: ByteArray): String {
@@ -79,13 +81,24 @@ object TxtParser {
         val chapters = ArrayList<ParsedChapter>()
         var currentTitle: String? = null
         var current = ArrayList<Para>()
+        // Project Gutenberg "[Illustration: ...]" captions may span several paragraphs; skip them,
+        // except a chapter heading inside one ("[Illustration: ...\n\nChapter I.]").
+        var bracketDepth = 0
         for (p in paragraphs) {
+            val inIllustration = bracketDepth > 0 || p.startsWith("[Illustration", ignoreCase = true)
+            if (inIllustration) {
+                bracketDepth += p.count { it == '[' } - p.count { it == ']' }
+                if (bracketDepth < 0) bracketDepth = 0
+                if (!isHeading(p)) continue
+            }
             if (isHeading(p)) {
                 if (current.isNotEmpty()) chapters += ParsedChapter(currentTitle, current)
-                currentTitle = p
-                current = arrayListOf(Para(p, heading = true))
+                // "[Illustration: ... Chapter I.]" style leftovers: keep just "Chapter I"
+                val title = p.trim().trim('[', ']', '(', ')', ' ').trimEnd('.', ' ')
+                currentTitle = title
+                current = arrayListOf(Para(title, heading = true))
             } else {
-                current += Para(p)
+                current += Para(p.replace(ITALIC_UNDERSCORES, "$1"))
             }
         }
         if (current.isNotEmpty()) chapters += ParsedChapter(currentTitle, current)

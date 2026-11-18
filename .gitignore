@@ -8,3 +8,6 @@ captures/
 app/libs/*.aar
 voice-samples/
 tools/ru-stress/work/
+keystore.properties
+*.jks
+*.keystore

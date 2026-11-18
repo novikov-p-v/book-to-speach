@@ -161,7 +161,7 @@ class PlaybackController(
         val book = _state.value.book ?: return
         library.update(book.id) { it.copy(voiceId = voiceId) }
         val updated = library.get(book.id) ?: return
-        _state.update { it.copy(book = updated, voiceName = voices.voiceFor(updated)?.label, error = null) }
+        _state.update { it.copy(book = updated, voiceName = voices.voiceFor(updated)?.label, error = null, slowVoice = false) }
         if (_state.value.playWhenReady) restart(_state.value.chunkIndex)
     }
 

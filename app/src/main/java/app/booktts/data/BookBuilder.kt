@@ -1,6 +1,8 @@
 package app.booktts.data
 
+import app.booktts.parse.Para
 import app.booktts.parse.ParsedBook
+import app.booktts.parse.ParsedChapter
 import app.booktts.text.LanguageDetector
 import app.booktts.text.SentenceSplitter
 import app.booktts.text.TextNormalizer
@@ -19,7 +21,7 @@ object BookBuilder {
 
         val chunks = ArrayList<Chunk>()
         val chapters = ArrayList<ChapterInfo>()
-        for (ch in parsed.chapters) {
+        for (ch in mergeHeadingOnly(parsed.chapters)) {
             val chapterIdx = chapters.size
             val start = chunks.size
             for (p in ch.paragraphs) {
@@ -41,6 +43,25 @@ object BookBuilder {
             return Result(lang, splitIntoParts(chunks))
         }
         return Result(lang, BookContent(chapters, chunks))
+    }
+
+    /**
+     * Sections that contain only headings (book title, "Part One" before nested chapters) are not useful
+     * chapters to jump to: prepend them to the following chapter instead.
+     */
+    internal fun mergeHeadingOnly(chapters: List<ParsedChapter>): List<ParsedChapter> {
+        val out = ArrayList<ParsedChapter>()
+        var pending = emptyList<Para>()
+        for ((i, ch) in chapters.withIndex()) {
+            val headingOnly = ch.paragraphs.all { it.heading }
+            if (headingOnly && i < chapters.lastIndex) {
+                pending = pending + ch.paragraphs
+            } else {
+                out += if (pending.isEmpty()) ch else ch.copy(paragraphs = pending + ch.paragraphs)
+                pending = emptyList()
+            }
+        }
+        return out
     }
 
     private fun splitIntoParts(chunks: List<Chunk>): BookContent {

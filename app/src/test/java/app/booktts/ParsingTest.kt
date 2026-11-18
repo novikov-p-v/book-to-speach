@@ -108,4 +108,38 @@ class ParsingTest {
         val paragraphs = built.content.paragraphs()
         assertEquals(built.content.chunks.size, paragraphs.sumOf { it.count() })
     }
+
+    @Test
+    fun heading_only_sections_merge_into_next_chapter() {
+        val book = app.booktts.parse.ParsedBook("Б", null, "ru", "fb2", listOf(
+            app.booktts.parse.ParsedChapter(null, listOf(app.booktts.parse.Para("Анна Каренина", heading = true))),
+            app.booktts.parse.ParsedChapter("Часть первая", listOf(app.booktts.parse.Para("Часть первая", heading = true))),
+            app.booktts.parse.ParsedChapter("Глава I", listOf(app.booktts.parse.Para("Глава I", heading = true), app.booktts.parse.Para("Текст главы."))),
+            app.booktts.parse.ParsedChapter("Глава II", listOf(app.booktts.parse.Para("Глава II", heading = true), app.booktts.parse.Para("Ещё текст."))),
+        ))
+        val c = BookBuilder.build(book).content
+        assertEquals(listOf("Глава I", "Глава II"), c.chapters.map { it.title })
+        // the merged headings are still read, at the start of the first chapter
+        assertEquals(listOf("Анна Каренина", "Часть первая", "Глава I", "Текст главы."), c.chunks.filter { it.chapter == 0 }.map { it.text })
+    }
+
+    @Test
+    fun txt_heading_titles_are_cleaned() {
+        val book = TxtParser.parse("Chapter I.]\n\nIt is a truth.\n\nCHAPTER II.\n\nMore text.\n".toByteArray(), "t")
+        assertEquals(listOf("Chapter I", "CHAPTER II"), book.chapters.map { it.title })
+    }
+
+    @Test
+    fun gutenberg_illustrations_are_skipped() {
+        val text = "Intro text.\n\n[Illustration: ·PRIDE·\n\n\nChapter I.]\n\nIt is a truth.\n\n[Illustration:\n\n“He came down”\n\n[_Copyright 1894_]]\n\nThis was enough.\n\n[Illustration]\n\nEnd.\n"
+        val book = TxtParser.parse(text.toByteArray(), "t")
+        val all = book.chapters.flatMap { it.paragraphs }.map { it.text }
+        assertEquals(listOf("Intro text.", "Chapter I", "It is a truth.", "This was enough.", "End."), all)
+    }
+
+    @Test
+    fun gutenberg_italics_underscores_removed() {
+        val book = TxtParser.parse("“_You_ want to tell me, and _I_ have no objection,” snake_case stays.\n\nNext.\n".toByteArray(), "t")
+        assertEquals("“You want to tell me, and I have no objection,” snake_case stays.", book.chapters[0].paragraphs[0].text)
+    }
 }
