@@ -151,10 +151,7 @@ fun ReaderScreen(bookId: String, onBack: () -> Unit, onVoices: () -> Unit) {
                     onNextChapter = pc::nextChapter,
                     onPrev = pc::prevChunk,
                     onNext = pc::nextChunk,
-                    onSpeed = {
-                        val i = speeds.indexOfFirst { it >= speed - 0.01f }
-                        pc.setSpeed(speeds[(i + 1) % speeds.size])
-                    },
+                    onSpeed = pc::setSpeed,
                 )
             }
         },
@@ -292,7 +289,7 @@ private fun PlayerBar(
     onNextChapter: () -> Unit,
     onPrev: () -> Unit,
     onNext: () -> Unit,
-    onSpeed: () -> Unit,
+    onSpeed: (Float) -> Unit,
 ) {
     Column(Modifier.navigationBarsPadding()) {
         LinearProgressIndicator(progress = { progress }, modifier = Modifier.fillMaxWidth())
@@ -313,7 +310,28 @@ private fun PlayerBar(
                 }
                 IconButton(onClick = onNext) { Icon(AppIcons.FastForward, stringResource(R.string.next_sentence)) }
                 IconButton(onClick = onNextChapter) { Icon(AppIcons.SkipNext, stringResource(R.string.next_chapter)) }
-                TextButton(onClick = onSpeed) { Text("%.1f×".format(speed)) }
+                Box {
+                    var speedMenu by remember { mutableStateOf(false) }
+                    TextButton(onClick = { speedMenu = true }) { Text("%.1f×".format(speed)) }
+                    DropdownMenu(expanded = speedMenu, onDismissRequest = { speedMenu = false }) {
+                        speeds.forEach { v ->
+                            val selected = kotlin.math.abs(v - speed) < 0.01f
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        "%.1f×".format(v),
+                                        fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
+                                        color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                                    )
+                                },
+                                onClick = {
+                                    speedMenu = false
+                                    onSpeed(v)
+                                },
+                            )
+                        }
+                    }
+                }
             }
         }
     }
