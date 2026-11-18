@@ -20,6 +20,13 @@
     <string name="manage_voices">Управление голосами</string>
     <string name="chapters">Главы</string>
     <string name="export_audio">Экспорт в аудиофайлы</string>
+    <string name="export_whole_book">Вся книга</string>
+    <plurals name="export_n_chapters">
+        <item quantity="one">Экспорт %1$d главы</item>
+        <item quantity="few">Экспорт %1$d глав</item>
+        <item quantity="many">Экспорт %1$d глав</item>
+        <item quantity="other">Экспорт %1$d главы</item>
+    </plurals>
     <string name="export_progress">Экспорт главы %1$d из %2$d</string>
     <string name="export_failed">Ошибка экспорта: %1$s</string>
     <string name="export_done">Экспорт завершён</string>

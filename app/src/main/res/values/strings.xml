@@ -20,6 +20,11 @@
     <string name="manage_voices">Manage voices</string>
     <string name="chapters">Chapters</string>
     <string name="export_audio">Export to audio files</string>
+    <string name="export_whole_book">Whole book</string>
+    <plurals name="export_n_chapters">
+        <item quantity="one">Export %1$d chapter</item>
+        <item quantity="other">Export %1$d chapters</item>
+    </plurals>
     <string name="export_progress">Exporting chapter %1$d of %2$d</string>
     <string name="export_failed">Export failed: %1$s</string>
     <string name="export_done">Export finished</string>

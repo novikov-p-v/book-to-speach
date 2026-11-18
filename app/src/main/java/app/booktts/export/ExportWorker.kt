@@ -23,7 +23,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 /**
- * Converts a book into one .m4a file per chapter inside a user-chosen folder.
+ * Converts a book (or selected chapters) into one .m4a file per chapter inside a user-chosen folder.
  * Already exported chapters are skipped, so a cancelled export can be resumed.
  */
 class ExportWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
@@ -43,8 +43,11 @@ class ExportWorker(context: Context, params: WorkerParameters) : CoroutineWorker
         val folder = root.findFile(folderName)?.takeIf { it.isDirectory } ?: root.createDirectory(folderName)
             ?: return@withContext Result.failure(workDataOf(KEY_ERROR to "Cannot create folder"))
 
+        val selected = inputData.getIntArray(KEY_CHAPTERS)
+            ?.filter { it in content.chapters.indices }?.distinct()?.sorted()
+            ?: content.chapters.indices.toList()
         val engine = TtsEngine()
-        val total = content.chapters.size
+        val total = selected.size
         try {
             setForeground(foregroundInfo(book.title, 0, total))
             engine.load(voice, c.settings.threadsFor(voice.model.type), c.espeakPatch.dataDirFor(voice.model))
@@ -53,10 +56,11 @@ class ExportWorker(context: Context, params: WorkerParameters) : CoroutineWorker
             val pauseFrames = sr * c.settings.paragraphPauseMs / 1000
             val gapFrames = sr * 120 / 1000
 
-            for ((i, chapter) in content.chapters.withIndex()) {
+            for ((n, i) in selected.withIndex()) {
+                val chapter = content.chapters[i]
                 coroutineContext.ensureActive()
-                setProgress(workDataOf(KEY_DONE to i, KEY_TOTAL to total))
-                setForeground(foregroundInfo(book.title, i, total))
+                setProgress(workDataOf(KEY_DONE to n, KEY_TOTAL to total))
+                setForeground(foregroundInfo(book.title, n, total))
                 val name = "%03d - %s.m4a".format(i + 1, sanitize(chapter.title)).take(120)
                 val existing = folder.findFile(name)
                 if (existing != null && existing.length() > 0) continue
@@ -119,15 +123,19 @@ class ExportWorker(context: Context, params: WorkerParameters) : CoroutineWorker
         private const val NOTIF_ID = 2001
         const val KEY_BOOK = "book"
         const val KEY_TREE = "tree"
+        const val KEY_CHAPTERS = "chapters"
         const val KEY_DONE = "done"
         const val KEY_TOTAL = "total"
         const val KEY_ERROR = "error"
 
         fun uniqueName(bookId: String) = "export-$bookId"
 
-        fun enqueue(context: Context, bookId: String, tree: Uri) {
+        /** [chapters] = chapter indices to export; null exports the whole book. */
+        fun enqueue(context: Context, bookId: String, tree: Uri, chapters: IntArray? = null) {
+            val data = workDataOf(KEY_BOOK to bookId, KEY_TREE to tree.toString())
+                .let { d -> if (chapters == null) d else androidx.work.Data.Builder().putAll(d).putIntArray(KEY_CHAPTERS, chapters).build() }
             val req = OneTimeWorkRequestBuilder<ExportWorker>()
-                .setInputData(workDataOf(KEY_BOOK to bookId, KEY_TREE to tree.toString()))
+                .setInputData(data)
                 .addTag("export")
                 .build()
             WorkManager.getInstance(context).enqueueUniqueWork(uniqueName(bookId), ExistingWorkPolicy.KEEP, req)

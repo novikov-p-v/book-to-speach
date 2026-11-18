@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
@@ -28,11 +29,13 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -52,6 +55,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
@@ -93,13 +97,15 @@ fun ReaderScreen(bookId: String, onBack: () -> Unit, onVoices: () -> Unit) {
     var menu by remember { mutableStateOf(false) }
     var showChapters by remember { mutableStateOf(false) }
     var showVoices by remember { mutableStateOf(false) }
+    var showExport by remember { mutableStateOf(false) }
+    var exportChapters by remember { mutableStateOf<IntArray?>(null) }
 
     val exportPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
         if (uri != null) {
             context.contentResolver.takePersistableUriPermission(
                 uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
             )
-            ExportWorker.enqueue(context, bookId, uri)
+            ExportWorker.enqueue(context, bookId, uri, exportChapters)
         }
     }
     val exportInfos by remember(bookId) {
@@ -132,7 +138,7 @@ fun ReaderScreen(bookId: String, onBack: () -> Unit, onVoices: () -> Unit) {
                         IconButton(onClick = { menu = true }) { Icon(Icons.Default.MoreVert, null) }
                         DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                             DropdownMenuItem(text = { Text(stringResource(R.string.voice)) }, onClick = { menu = false; showVoices = true })
-                            DropdownMenuItem(text = { Text(stringResource(R.string.export_audio)) }, onClick = { menu = false; exportPicker.launch(null) })
+                            DropdownMenuItem(text = { Text(stringResource(R.string.export_audio)) }, onClick = { menu = false; showExport = true }, enabled = content != null)
                             DropdownMenuItem(text = { Text(stringResource(R.string.manage_voices)) }, onClick = { menu = false; onVoices() })
                         }
                     }
@@ -196,7 +202,7 @@ fun ReaderScreen(bookId: String, onBack: () -> Unit, onVoices: () -> Unit) {
                         Text(stringResource(R.string.slow_voice_hint), style = MaterialTheme.typography.bodySmall)
                         Row {
                             TextButton(onClick = { showVoices = true }) { Text(stringResource(R.string.voice)) }
-                            TextButton(onClick = { exportPicker.launch(null) }) { Text(stringResource(R.string.export_audio)) }
+                            TextButton(onClick = { showExport = true }, enabled = content != null) { Text(stringResource(R.string.export_audio)) }
                         }
                     }
                 }
@@ -212,6 +218,13 @@ fun ReaderScreen(bookId: String, onBack: () -> Unit, onVoices: () -> Unit) {
 
     if (showChapters && content != null) {
         ChaptersDialog(content, s.chapterIndex, onPick = { pc.seekToChapter(it); showChapters = false }, onDismiss = { showChapters = false })
+    }
+    if (showExport && content != null) {
+        ExportDialog(
+            content, s.chapterIndex,
+            onExport = { chapters -> exportChapters = chapters; showExport = false; exportPicker.launch(null) },
+            onDismiss = { showExport = false },
+        )
     }
     if (showVoices && book != null) {
         val def = c.voices.defaultFor(book.lang)
@@ -335,6 +348,52 @@ private fun PlayerBar(
             }
         }
     }
+}
+
+@Composable
+private fun ExportDialog(content: BookContent, current: Int, onExport: (IntArray?) -> Unit, onDismiss: () -> Unit) {
+    val count = content.chapters.size
+    var selected by remember { mutableStateOf(setOf(current.coerceIn(0, (count - 1).coerceAtLeast(0)))) }
+    val all = selected.size == count
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.export_audio)) },
+        text = {
+            Column {
+                Row(
+                    Modifier.fillMaxWidth().toggleable(value = all, onValueChange = { selected = if (it) content.chapters.indices.toSet() else emptySet() }),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Checkbox(checked = all, onCheckedChange = null, modifier = Modifier.padding(8.dp))
+                    Text(stringResource(R.string.export_whole_book), fontWeight = FontWeight.Bold)
+                }
+                HorizontalDivider()
+                val state = rememberLazyListState(initialFirstVisibleItemIndex = (current - 2).coerceAtLeast(0))
+                LazyColumn(state = state, modifier = Modifier.heightIn(max = 420.dp)) {
+                    itemsIndexed(content.chapters) { i, ch ->
+                        val on = i in selected
+                        Row(
+                            Modifier.fillMaxWidth().toggleable(value = on, onValueChange = { selected = if (it) selected + i else selected - i }),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Checkbox(checked = on, onCheckedChange = null, modifier = Modifier.padding(8.dp))
+                            Text(
+                                ch.title,
+                                fontWeight = if (i == current) FontWeight.Bold else FontWeight.Normal,
+                                maxLines = 2, overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { onExport(if (all) null else selected.sorted().toIntArray()) }, enabled = selected.isNotEmpty()) {
+                Text(pluralStringResource(R.plurals.export_n_chapters, selected.size, selected.size))
+            }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
+    )
 }
 
 @Composable
