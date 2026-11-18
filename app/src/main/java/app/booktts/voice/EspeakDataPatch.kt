@@ -1,0 +1,56 @@
+package app.booktts.voice
+
+import android.content.Context
+import android.util.Log
+import app.booktts.data.Settings
+import java.io.File
+
+/**
+ * Installs an improved Russian espeak-ng dictionary (assets/ru/ru_dict) into every model's
+ * espeak-ng-data folder.
+ *
+ * espeak often stresses rarer Russian word forms wrongly (стука́йте instead of сту́кайте). The bundled
+ * ru_dict is espeak's own Russian dictionary recompiled with extra "word $N" entries (stress on vowel N)
+ * for every word where espeak disagreed with the RUAccent stress dictionary; homographs are excluded.
+ * See tools/ru-stress for how it is built.
+ *
+ * sherpa-onnx initialises espeak once per process from the first model it loads, so the file is placed
+ * in all models, before loading, and a change of the setting takes effect after an app restart.
+ */
+class EspeakDataPatch(private val context: Context, private val settings: Settings) {
+
+    /** Makes [model]'s ru_dict match the setting. Cheap when there is nothing to do. */
+    @Synchronized
+    fun apply(model: InstalledModel) {
+        val dataDir = model.files["dataDir"] ?: return
+        val dict = File(dataDir, "ru_dict")
+        if (!dict.isFile) return
+        val orig = File(dataDir, "ru_dict.orig")
+        val marker = File(dataDir, "ru_dict.patch")
+        val patched = marker.isFile && marker.readText() == VERSION
+        runCatching {
+            if (settings.ruStressDict && !patched) {
+                if (!orig.exists()) dict.copyTo(orig)
+                val tmp = File(dataDir, "ru_dict.tmp")
+                context.assets.open(ASSET).use { input -> tmp.outputStream().use { input.copyTo(it) } }
+                check(tmp.renameTo(dict)) { "rename failed" }
+                marker.writeText(VERSION)
+                Log.i(TAG, "Installed Russian stress dictionary into ${model.id}")
+            } else if (!settings.ruStressDict && marker.isFile && orig.isFile) {
+                orig.copyTo(dict, overwrite = true)
+                marker.delete()
+                Log.i(TAG, "Restored original Russian dictionary in ${model.id}")
+            }
+        }.onFailure { Log.e(TAG, "Cannot update ru_dict in ${model.id}", it) }
+    }
+
+    fun applyAll(models: List<InstalledModel>) = models.forEach(::apply)
+
+    companion object {
+        private const val TAG = "EspeakDataPatch"
+        const val ASSET = "ru/ru_dict"
+
+        /** Bump when assets/ru/ru_dict is regenerated so installed copies are refreshed. */
+        const val VERSION = "ru-stress-1"
+    }
+}

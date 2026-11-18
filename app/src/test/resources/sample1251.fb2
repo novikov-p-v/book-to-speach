@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink">
+<description><title-info><author><first-name>Лев</first-name><last-name>Толстой</last-name></author>
+<book-title>Тестовая книга</book-title><lang>ru</lang></title-info></description>
+<body>
+<title><p>Тестовая книга</p></title>
+<section><title><p>Глава 1</p><p>Начало</p></title>
+<epigraph><p>Эпиграф к главе.</p></epigraph>
+<p>Первый абзац<a l:href="#n1" type="note">[1]</a> текста. Второе предложение.</p>
+<poem><title><p>Стих</p></title><stanza><v>Строка стиха</v></stanza></poem>
+</section>
+<section><title><p>Глава 2</p></title><p>Текст <emphasis>второй</emphasis> главы.</p></section>
+</body>
+<body name="notes"><section id="n1"><p>Примечание, которое не читается.</p></section></body>
+</FictionBook>

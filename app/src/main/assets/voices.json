@@ -1,0 +1,568 @@
+[
+ {
+  "id": "supertonic-3",
+  "type": "supertonic",
+  "langs": [
+   "en",
+   "ko",
+   "ja",
+   "ar",
+   "bg",
+   "cs",
+   "da",
+   "de",
+   "el",
+   "es",
+   "et",
+   "fi",
+   "fr",
+   "hi",
+   "hr",
+   "hu",
+   "id",
+   "it",
+   "lt",
+   "lv",
+   "nl",
+   "pl",
+   "pt",
+   "ro",
+   "ru",
+   "sk",
+   "sl",
+   "sv",
+   "tr",
+   "uk",
+   "vi"
+  ],
+  "name": "Supertonic 3 — natural, 31 languages",
+  "speakers": [
+   {
+    "sid": 0,
+    "name": "F1 (female)"
+   },
+   {
+    "sid": 1,
+    "name": "F2 (female)"
+   },
+   {
+    "sid": 2,
+    "name": "F3 (female)"
+   },
+   {
+    "sid": 3,
+    "name": "F4 (female)"
+   },
+   {
+    "sid": 4,
+    "name": "F5 (female)"
+   },
+   {
+    "sid": 5,
+    "name": "M1 (male)"
+   },
+   {
+    "sid": 6,
+    "name": "M2 (male)"
+   },
+   {
+    "sid": 7,
+    "name": "M3 (male)"
+   },
+   {
+    "sid": 8,
+    "name": "M4 (male)"
+   },
+   {
+    "sid": 9,
+    "name": "M5 (male)"
+   }
+  ],
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/sherpa-onnx-supertonic-3-tts-int8-2026-05-11.tar.bz2",
+  "sizeBytes": 128774318,
+  "sha256": "82fa96f91c4ef8abaae3a14a3f4153facf88bed821d1f7331cec2700f432c427"
+ },
+ {
+  "id": "kokoro-1.0-full",
+  "type": "kokoro",
+  "langs": [
+   "en"
+  ],
+  "name": "Kokoro 1.0 — best English",
+  "speakers": [
+   {
+    "sid": 3,
+    "name": "Heart (US, female)",
+    "accent": "us"
+   },
+   {
+    "sid": 16,
+    "name": "Michael (US, male)",
+    "accent": "us"
+   },
+   {
+    "sid": 21,
+    "name": "Emma (GB, female)",
+    "accent": "gb"
+   },
+   {
+    "sid": 26,
+    "name": "George (GB, male)",
+    "accent": "gb"
+   },
+   {
+    "sid": 0,
+    "name": "Alloy (US, female)",
+    "accent": "us"
+   },
+   {
+    "sid": 1,
+    "name": "Aoede (US, female)",
+    "accent": "us"
+   },
+   {
+    "sid": 2,
+    "name": "Bella (US, female)",
+    "accent": "us"
+   },
+   {
+    "sid": 4,
+    "name": "Jessica (US, female)",
+    "accent": "us"
+   },
+   {
+    "sid": 5,
+    "name": "Kore (US, female)",
+    "accent": "us"
+   },
+   {
+    "sid": 6,
+    "name": "Nicole (US, female)",
+    "accent": "us"
+   },
+   {
+    "sid": 7,
+    "name": "Nova (US, female)",
+    "accent": "us"
+   },
+   {
+    "sid": 8,
+    "name": "River (US, female)",
+    "accent": "us"
+   },
+   {
+    "sid": 9,
+    "name": "Sarah (US, female)",
+    "accent": "us"
+   },
+   {
+    "sid": 10,
+    "name": "Sky (US, female)",
+    "accent": "us"
+   },
+   {
+    "sid": 11,
+    "name": "Adam (US, male)",
+    "accent": "us"
+   },
+   {
+    "sid": 12,
+    "name": "Echo (US, male)",
+    "accent": "us"
+   },
+   {
+    "sid": 13,
+    "name": "Eric (US, male)",
+    "accent": "us"
+   },
+   {
+    "sid": 14,
+    "name": "Fenrir (US, male)",
+    "accent": "us"
+   },
+   {
+    "sid": 15,
+    "name": "Liam (US, male)",
+    "accent": "us"
+   },
+   {
+    "sid": 17,
+    "name": "Onyx (US, male)",
+    "accent": "us"
+   },
+   {
+    "sid": 18,
+    "name": "Puck (US, male)",
+    "accent": "us"
+   },
+   {
+    "sid": 19,
+    "name": "Santa (US, male)",
+    "accent": "us"
+   },
+   {
+    "sid": 20,
+    "name": "Alice (GB, female)",
+    "accent": "gb"
+   },
+   {
+    "sid": 22,
+    "name": "Isabella (GB, female)",
+    "accent": "gb"
+   },
+   {
+    "sid": 23,
+    "name": "Lily (GB, female)",
+    "accent": "gb"
+   },
+   {
+    "sid": 24,
+    "name": "Daniel (GB, male)",
+    "accent": "gb"
+   },
+   {
+    "sid": 25,
+    "name": "Fable (GB, male)",
+    "accent": "gb"
+   },
+   {
+    "sid": 27,
+    "name": "Lewis (GB, male)",
+    "accent": "gb"
+   }
+  ],
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/kokoro-multi-lang-v1_0.tar.bz2",
+  "sizeBytes": 349886476,
+  "sha256": "60703707bc05ccd48d60e1eb723f38b07d6e474795a0b6a588d7220400e0f7a4"
+ },
+ {
+  "id": "ru_RU-irina-medium",
+  "type": "vits",
+  "langs": [
+   "ru"
+  ],
+  "name": "Piper Irina (female)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ru_RU-irina-medium.tar.bz2",
+  "sizeBytes": 67153308,
+  "sha256": "1fc0f54e5e084fe287c07909f2f6e0ba6d857864cf800e3ab80286a4e8233008"
+ },
+ {
+  "id": "ru_RU-irina-medium-int8",
+  "type": "vits",
+  "langs": [
+   "ru"
+  ],
+  "name": "Piper Irina (female) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ru_RU-irina-medium-int8.tar.bz2",
+  "sizeBytes": 21149417,
+  "sha256": "b0000a509f7551a80742eed5c43b8eb03f469cb9f0a42f6feee96ce0da0ebab8"
+ },
+ {
+  "id": "ru_RU-denis-medium",
+  "type": "vits",
+  "langs": [
+   "ru"
+  ],
+  "name": "Piper Denis (male)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ru_RU-denis-medium.tar.bz2",
+  "sizeBytes": 67190991,
+  "sha256": "efa4c18e0b5e32b81d1b6df36b9d312831e5d545200e27848ef926a4cd930300"
+ },
+ {
+  "id": "ru_RU-denis-medium-int8",
+  "type": "vits",
+  "langs": [
+   "ru"
+  ],
+  "name": "Piper Denis (male) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ru_RU-denis-medium-int8.tar.bz2",
+  "sizeBytes": 21058905,
+  "sha256": "d710e29eb7854c42461d16d65d3cef753cc559639ca75806edc75ba71f23af66"
+ },
+ {
+  "id": "ru_RU-dmitri-medium",
+  "type": "vits",
+  "langs": [
+   "ru"
+  ],
+  "name": "Piper Dmitri (male)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ru_RU-dmitri-medium.tar.bz2",
+  "sizeBytes": 67188551,
+  "sha256": "c86d0803737de13d441923ff3b3f309482fab8d7af3ec85949942809eb9a3660"
+ },
+ {
+  "id": "ru_RU-dmitri-medium-int8",
+  "type": "vits",
+  "langs": [
+   "ru"
+  ],
+  "name": "Piper Dmitri (male) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ru_RU-dmitri-medium-int8.tar.bz2",
+  "sizeBytes": 21129441,
+  "sha256": "7636793307f634ce54c6e65528a91a61683114f1a6635a08caf64ba6c54e6a63"
+ },
+ {
+  "id": "ru_RU-ruslan-medium",
+  "type": "vits",
+  "langs": [
+   "ru"
+  ],
+  "name": "Piper Ruslan (male)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ru_RU-ruslan-medium.tar.bz2",
+  "sizeBytes": 67210684,
+  "sha256": "0690b1cad01f86e8db9ba988af24898bdc1af774e23cb2e46b9c730269b6fd83"
+ },
+ {
+  "id": "ru_RU-ruslan-medium-int8",
+  "type": "vits",
+  "langs": [
+   "ru"
+  ],
+  "name": "Piper Ruslan (male) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ru_RU-ruslan-medium-int8.tar.bz2",
+  "sizeBytes": 21127907,
+  "sha256": "93b9f8c7b34c1420bdc253a0ce5ab1cb6b6be2e8fa26c1f3b36c6189233c3e7e"
+ },
+ {
+  "id": "en_US-amy-medium",
+  "type": "vits",
+  "langs": [
+   "en"
+  ],
+  "name": "Piper Amy (US, female)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_US-amy-medium.tar.bz2",
+  "sizeBytes": 67223746,
+  "sha256": "9a5d1fc497f85e8022b785bff5f8105203b1e33099ee6265203efc70b0cb0264"
+ },
+ {
+  "id": "en_US-amy-medium-int8",
+  "type": "vits",
+  "langs": [
+   "en"
+  ],
+  "name": "Piper Amy (US, female) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_US-amy-medium-int8.tar.bz2",
+  "sizeBytes": 21028122,
+  "sha256": "bd23c0aa629eb3719448582f45ede49e8fa6a679061fed5eab16a6a6fd8e7e82"
+ },
+ {
+  "id": "en_US-lessac-medium",
+  "type": "vits",
+  "langs": [
+   "en"
+  ],
+  "name": "Piper Lessac (US, female)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_US-lessac-medium.tar.bz2",
+  "sizeBytes": 67230653,
+  "sha256": "9e3febfacf0abf4270172d2958bcec246032b7e88efc2720840cc80c93de334e"
+ },
+ {
+  "id": "en_US-lessac-medium-int8",
+  "type": "vits",
+  "langs": [
+   "en"
+  ],
+  "name": "Piper Lessac (US, female) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_US-lessac-medium-int8.tar.bz2",
+  "sizeBytes": 20969179,
+  "sha256": "f1c6d0295cf16087b05f80fdca5b44daca5cd78e2c425d419a42ba34929805f9"
+ },
+ {
+  "id": "en_US-ryan-medium",
+  "type": "vits",
+  "langs": [
+   "en"
+  ],
+  "name": "Piper Ryan (US, male)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_US-ryan-medium.tar.bz2",
+  "sizeBytes": 67213100,
+  "sha256": "c546af78b6395b4e7c4ce1ed899438b64426a362f5d4ec5fecd090ded9ad7505"
+ },
+ {
+  "id": "en_US-ryan-medium-int8",
+  "type": "vits",
+  "langs": [
+   "en"
+  ],
+  "name": "Piper Ryan (US, male) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_US-ryan-medium-int8.tar.bz2",
+  "sizeBytes": 21083446,
+  "sha256": "376eb489d42e98cb49f0e13a633e8d88580bd247ed8aacc298a733210404f771"
+ },
+ {
+  "id": "en_GB-alan-medium",
+  "type": "vits",
+  "langs": [
+   "en"
+  ],
+  "name": "Piper Alan (GB, male)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_GB-alan-medium.tar.bz2",
+  "sizeBytes": 67220121,
+  "sha256": "a48d4017da0f77668b27bed63fe6e04dd64c6397e1fadad4f460efb0ef7c9012"
+ },
+ {
+  "id": "en_GB-alan-medium-int8",
+  "type": "vits",
+  "langs": [
+   "en"
+  ],
+  "name": "Piper Alan (GB, male) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_GB-alan-medium-int8.tar.bz2",
+  "sizeBytes": 21103831,
+  "sha256": "f0b2526c9600657141ccbbe412f6159dceedab5bab4ba4e8857d9443acb50de4"
+ },
+ {
+  "id": "en_GB-cori-medium",
+  "type": "vits",
+  "langs": [
+   "en"
+  ],
+  "name": "Piper Cori (GB, female)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_GB-cori-medium.tar.bz2",
+  "sizeBytes": 67257412,
+  "sha256": "49c9a5361bbdd95d7ca9687c4de11e5908481f65e7c7c368960df79949fdac2b"
+ },
+ {
+  "id": "en_GB-cori-medium-int8",
+  "type": "vits",
+  "langs": [
+   "en"
+  ],
+  "name": "Piper Cori (GB, female) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-en_GB-cori-medium-int8.tar.bz2",
+  "sizeBytes": 20768736,
+  "sha256": "169ca8aff3adb271f009a4924c99928a811dbf2b52eaca2dbb460e8c34478c93"
+ },
+ {
+  "id": "uk_UA-ukrainian_tts-medium",
+  "type": "vits",
+  "langs": [
+   "uk"
+  ],
+  "name": "Piper Ukrainian TTS (multi)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-uk_UA-ukrainian_tts-medium.tar.bz2",
+  "sizeBytes": 80355083,
+  "sha256": "92be6ff21ebb1cbcc0c71121a6437db8d060cee5785287aaa6a19a2548f59c03"
+ },
+ {
+  "id": "uk_UA-ukrainian_tts-medium-int8",
+  "type": "vits",
+  "langs": [
+   "uk"
+  ],
+  "name": "Piper Ukrainian TTS (multi) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-uk_UA-ukrainian_tts-medium-int8.tar.bz2",
+  "sizeBytes": 22767075,
+  "sha256": "9e3e20f311e3c486d989c3d481d9537741deb7beaeed1aa63c737574498b1e75"
+ },
+ {
+  "id": "de_DE-thorsten-medium",
+  "type": "vits",
+  "langs": [
+   "de"
+  ],
+  "name": "Piper Thorsten (male)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-de_DE-thorsten-medium.tar.bz2",
+  "sizeBytes": 67214254,
+  "sha256": "50487d9c95fdf2191f31d2588569381063ba1591dcd4c7d4bdd30f12b2191714"
+ },
+ {
+  "id": "de_DE-thorsten-medium-int8",
+  "type": "vits",
+  "langs": [
+   "de"
+  ],
+  "name": "Piper Thorsten (male) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-de_DE-thorsten-medium-int8.tar.bz2",
+  "sizeBytes": 20949833,
+  "sha256": "07e240b7b9c1fc9211d5a69512f8cbe11b3286c2ed79c15c076ac6ed427fdf13"
+ },
+ {
+  "id": "fr_FR-siwis-medium",
+  "type": "vits",
+  "langs": [
+   "fr"
+  ],
+  "name": "Piper Siwis (female)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-fr_FR-siwis-medium.tar.bz2",
+  "sizeBytes": 67207459,
+  "sha256": "375909aa30842b3a4efa10b1beb1d761af792960ae6873b4d53889f96c66195b"
+ },
+ {
+  "id": "fr_FR-siwis-medium-int8",
+  "type": "vits",
+  "langs": [
+   "fr"
+  ],
+  "name": "Piper Siwis (female) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-fr_FR-siwis-medium-int8.tar.bz2",
+  "sizeBytes": 20914888,
+  "sha256": "3909cff9b3cfd4820c66aa13bf554315c82e34899c161f0b446ece372bc4b5ec"
+ },
+ {
+  "id": "es_ES-davefx-medium",
+  "type": "vits",
+  "langs": [
+   "es"
+  ],
+  "name": "Piper Davefx (male)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-es_ES-davefx-medium.tar.bz2",
+  "sizeBytes": 67184952,
+  "sha256": "a3f6beb54a9cb893279f72978a22f807a4d9fc9c7848157b524d5cc7b7f58b22"
+ },
+ {
+  "id": "es_ES-davefx-medium-int8",
+  "type": "vits",
+  "langs": [
+   "es"
+  ],
+  "name": "Piper Davefx (male) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-es_ES-davefx-medium-int8.tar.bz2",
+  "sizeBytes": 21171632,
+  "sha256": "8bb8ac1cefb727caec9bd9c6c3185c673c8b42c53bd29bb25d5a7715dac37125"
+ },
+ {
+  "id": "it_IT-paola-medium",
+  "type": "vits",
+  "langs": [
+   "it"
+  ],
+  "name": "Piper Paola (female)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-it_IT-paola-medium.tar.bz2",
+  "sizeBytes": 67221173,
+  "sha256": "7541f75778afa164e44e34baaef63befad7698595df26a95ca944b63ef1a16b4"
+ },
+ {
+  "id": "it_IT-paola-medium-int8",
+  "type": "vits",
+  "langs": [
+   "it"
+  ],
+  "name": "Piper Paola (female) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-it_IT-paola-medium-int8.tar.bz2",
+  "sizeBytes": 21143212,
+  "sha256": "2b975ed305391c056944a4dde67ee754dd824099503a860295bb4c1d724662d8"
+ },
+ {
+  "id": "pl_PL-gosia-medium",
+  "type": "vits",
+  "langs": [
+   "pl"
+  ],
+  "name": "Piper Gosia (female)",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-pl_PL-gosia-medium.tar.bz2",
+  "sizeBytes": 67211182,
+  "sha256": "75bd34dcbdc4dd98d763954756b4b34b4208100497c836381542e4d73dcefa9c"
+ },
+ {
+  "id": "pl_PL-gosia-medium-int8",
+  "type": "vits",
+  "langs": [
+   "pl"
+  ],
+  "name": "Piper Gosia (female) — fast",
+  "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-pl_PL-gosia-medium-int8.tar.bz2",
+  "sizeBytes": 21109262,
+  "sha256": "72acac4c4b031725c41a61b3af0314a3d30e1ec2cd83ee410ea5f9e6d2d9d4fb"
+ }
+]
