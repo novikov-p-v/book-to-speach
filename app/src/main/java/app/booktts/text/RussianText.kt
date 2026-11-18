@@ -12,8 +12,9 @@ class SpeechTextPreparer(private val context: Context, private val settings: Set
     private var yoFailed = false
 
     fun prepare(text: String, lang: String): String {
-        if (lang != "ru" || !settings.restoreYo) return text
-        return russianYo()?.process(text) ?: text
+        val t = Abbreviations.expand(text, lang)
+        if (lang != "ru" || !settings.restoreYo) return t
+        return russianYo()?.process(t) ?: t
     }
 
     /** Compiles the bundled ё dictionary on first use (~1 s), then memory-maps it. */

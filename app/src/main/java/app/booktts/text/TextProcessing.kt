@@ -24,16 +24,18 @@ object SentenceSplitter {
 
     /**
      * Splits a paragraph into speakable chunks: sentences, with very short ones merged
-     * and very long ones broken at punctuation / spaces.
+     * and very long ones broken at punctuation / spaces. Does not split after abbreviations or initials.
      */
     fun split(paragraph: String, locale: Locale, min: Int = MIN_CHUNK, max: Int = MAX_CHUNK): List<String> {
+        // periods of abbreviations and initials are hidden from BreakIterator, then put back
+        val text = Abbreviations.protect(paragraph)
         val bi = BreakIterator.getSentenceInstance(locale)
-        bi.setText(paragraph)
+        bi.setText(text)
         val sentences = ArrayList<String>()
         var start = bi.first()
         var end = bi.next()
         while (end != BreakIterator.DONE) {
-            val s = paragraph.substring(start, end).trim()
+            val s = Abbreviations.restore(text.substring(start, end)).trim()
             if (s.isNotEmpty()) sentences += s
             start = end
             end = bi.next()
