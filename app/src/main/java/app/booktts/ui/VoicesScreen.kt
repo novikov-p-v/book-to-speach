@@ -308,7 +308,6 @@ private fun StressDictRow() {
     fun set(v: Boolean) {
         c.settings.ruStressDict = v
         changed = !changed
-        scope.launch(kotlinx.coroutines.Dispatchers.IO) { c.espeakPatch.applyAll(c.voices.installed.value) }
     }
     Row(
         Modifier.fillMaxWidth().clickable { set(!enabled) }.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp),

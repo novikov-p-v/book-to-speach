@@ -29,7 +29,8 @@ class TtsEngine {
     var sampleRate: Int = 22050
         private set
 
-    suspend fun load(voice: Voice, threads: Int) = mutex.withLock {
+    /** @param espeakDataDir espeak-ng data folder for Piper/Kokoro (see EspeakDataPatch). */
+    suspend fun load(voice: Voice, threads: Int, espeakDataDir: String) = mutex.withLock {
         val m = voice.model
         // Kokoro uses a different pronunciation lexicon for US and GB voices.
         val lexicon = when (m.type) {
@@ -37,7 +38,7 @@ class TtsEngine {
             ModelType.VITS -> m.file("lexicon")
             else -> ""
         }
-        val key = "${m.id}/$lexicon/$threads"
+        val key = "${m.id}/$lexicon/$threads/$espeakDataDir"
         if (key == loadedKey && tts != null) return@withLock
         tts?.release()
         tts = null
@@ -61,7 +62,7 @@ class TtsEngine {
                     model = m.file("model"),
                     voices = m.file("voices"),
                     tokens = m.file("tokens"),
-                    dataDir = m.file("dataDir"),
+                    dataDir = espeakDataDir,
                     lexicon = lexicon,
                 ),
                 numThreads = threads, debug = false, provider = "cpu",
@@ -70,7 +71,7 @@ class TtsEngine {
                 vits = OfflineTtsVitsModelConfig(
                     model = m.file("model"),
                     tokens = m.file("tokens"),
-                    dataDir = m.file("dataDir"),
+                    dataDir = espeakDataDir,
                     lexicon = lexicon,
                 ),
                 numThreads = threads, debug = false, provider = "cpu",

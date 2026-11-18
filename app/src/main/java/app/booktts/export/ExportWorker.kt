@@ -47,8 +47,7 @@ class ExportWorker(context: Context, params: WorkerParameters) : CoroutineWorker
         val total = content.chapters.size
         try {
             setForeground(foregroundInfo(book.title, 0, total))
-            c.espeakPatch.apply(voice.model)
-            engine.load(voice, c.settings.threadsFor(voice.model.type))
+            engine.load(voice, c.settings.threadsFor(voice.model.type), c.espeakPatch.dataDirFor(voice.model))
             val speed = c.settings.speed
             val sr = engine.sampleRate
             val pauseFrames = sr * c.settings.paragraphPauseMs / 1000

@@ -208,8 +208,7 @@ class PlaybackController(
             return@coroutineScope
         }
         _state.update { it.copy(buffering = true, voiceName = voice.label) }
-        espeakPatch.apply(voice.model)
-        engine.load(voice, settings.threadsFor(voice.model.type))
+        engine.load(voice, settings.threadsFor(voice.model.type), espeakPatch.dataDirFor(voice.model))
 
         val speed = settings.speed
         val sampleRate = engine.sampleRate

@@ -17,8 +17,9 @@ Internet is used only to download a voice once (Voices screen); after that every
 - Warns when a voice is slower than real time on the device (suggests a lighter voice or export).
 - Russian: restores «ё» before synthesis (еще → ещё, шел → шёл), using RUAccent's ё dictionary (MIT, bundled in
   `assets/ru`, compiled on first use into a memory-mapped table). Ambiguous words (все/всё) are left as written.
-  Stress marks were evaluated and rejected: sherpa-onnx 1.13.8's espeak-ng ignores U+0301 for many words and the
-  mark disables espeak's own dictionary (e.g. «счастли́вые» gains a pronounced «т»); `[[phonemes]]` input is disabled.
+- Russian stress for Piper: espeak's Russian dictionary is extended with ~932k `word $N` stress entries where it
+  disagrees with RUAccent (homographs, clitics and function words excluded) — see `tools/ru-stress/`.
+  ~1 correction per 157 words of real prose (names, rarer forms); setting in Voices → Russian pronunciation.
 - Language auto-detection (FB2 `<lang>` tag, otherwise script/stop-word heuristics).
 
 ## Build

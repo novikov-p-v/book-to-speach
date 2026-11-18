@@ -42,8 +42,7 @@ class VoicePreview(private val settings: Settings, private val speechText: Speec
         job = scope.launch {
             old?.cancelAndJoin()
             try {
-                espeakPatch.apply(voice.model)
-                engine.load(voice, settings.threadsFor(voice.model.type))
+                engine.load(voice, settings.threadsFor(voice.model.type), espeakPatch.dataDirFor(voice.model))
                 val sampleLang = if (lang in samples) lang else "en"
                 val text = speechText.prepare(samples.getValue(sampleLang), sampleLang)
                 val pcm = engine.generate(text, voice.sid, settings.speed, sampleLang, settings.qualitySteps)
