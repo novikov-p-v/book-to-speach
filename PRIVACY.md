@@ -16,7 +16,7 @@ Book to Speech reads books aloud using speech models that run entirely on your d
 - **Permissions:** notifications (to show playback/download/export progress) and foreground services
   (to keep reading with the screen off and to finish downloads/exports).
 
-Questions: open an issue at https://github.com/novikov-p-v/book-to-speach/issues
+Questions: open an issue at https://github.com/novikov-p-v/book-to-speech/issues
 
 ---
 

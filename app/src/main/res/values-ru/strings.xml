@@ -71,6 +71,7 @@
     <string name="about_text">Читает книги вслух полностью на устройстве. Открытый исходный код под лицензией MIT; приложение в целом содержит espeak-ng и поэтому распространяется на условиях GNU GPL v3.</string>
     <string name="about_privacy_title">Конфиденциальность</string>
     <string name="about_privacy">Приложение не собирает данные, в нём нет рекламы и аналитики. Книги не покидают устройство. Интернет нужен только для загрузки голосов.</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
     <string name="about_components">Открытые компоненты</string>
     <string name="about_voices">Установленные голоса</string>
 </resources>

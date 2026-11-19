@@ -21,7 +21,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.booktts.R
 import app.booktts.container
 
-const val SOURCE_URL = "https://github.com/novikov-p-v/book-to-speach"
+const val SOURCE_URL = "https://github.com/novikov-p-v/book-to-speech"
+const val PRIVACY_URL = "$SOURCE_URL/blob/main/PRIVACY.md"
 
 /** Third-party software in the app (name, licence). */
 private val components = listOf(
@@ -55,6 +56,9 @@ fun AboutDialog(onDismiss: () -> Unit) {
 
                 Section(stringResource(R.string.about_privacy_title))
                 Text(stringResource(R.string.about_privacy), style = MaterialTheme.typography.bodySmall)
+                TextButton(onClick = {
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_URL)))
+                }) { Text(stringResource(R.string.privacy_policy)) }
 
                 Section(stringResource(R.string.about_components))
                 components.forEach { (name, lic) -> Text("$name — $lic", style = MaterialTheme.typography.bodySmall) }

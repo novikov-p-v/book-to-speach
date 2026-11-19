@@ -43,7 +43,7 @@ Before each upload, increase `versionCode` (and usually `versionName`) in `app/b
 - [ ] Create app: name "Book to Speech", default language, *App*, *Free*.
 - [ ] **App signing:** let Google manage the app signing key; upload the `.aab` signed with your upload key.
 - [ ] **Store listing:** texts below, 512×512 icon, 1024×500 feature graphic, ≥ 2 phone screenshots (`docs/screenshots/`).
-- [ ] **Privacy policy URL:** `https://github.com/novikov-p-v/book-to-speach/blob/main/PRIVACY.md`
+- [ ] **Privacy policy URL:** `https://github.com/novikov-p-v/book-to-speech/blob/main/PRIVACY.md`
 - [ ] **Data safety:** no data collected, no data shared. (Downloads go directly to GitHub.)
 - [ ] **Ads:** no. **Content rating:** questionnaire (reference/education, no user content shared).
 - [ ] **Target audience:** 13+ (simplest; avoids the Families program requirements).

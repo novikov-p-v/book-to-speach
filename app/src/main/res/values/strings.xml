@@ -69,6 +69,7 @@
     <string name="about_text">Reads books aloud entirely on your device. Open source: the source code is MIT-licensed; the app as distributed includes espeak-ng and is therefore covered by the GNU GPL v3.</string>
     <string name="about_privacy_title">Privacy</string>
     <string name="about_privacy">The app collects no data and has no ads or analytics. Your books never leave the device. The internet is used only when you download a voice.</string>
+    <string name="privacy_policy">Privacy policy</string>
     <string name="about_components">Open-source components</string>
     <string name="about_voices">Installed voices</string>
 </resources>
