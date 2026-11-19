@@ -14,12 +14,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
@@ -42,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import android.content.pm.ApplicationInfo
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -154,6 +157,11 @@ fun VoicesScreen(onBack: () -> Unit) {
                 SectionHeader(stringResource(R.string.ru_pronunciation))
                 YoRow()
                 if (c.espeakPatch.available) StressDictRow()
+            }
+
+            val debuggable = context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
+            if (debuggable && defaultLangs.isNotEmpty()) {
+                item { CustomTextRow(defaultLangs) }
             }
 
             if (installed.any { it.type == ModelType.SUPERTONIC }) {
@@ -277,6 +285,44 @@ private fun ModelRow(m: CatalogModel, isInstalled: Boolean, works: List<WorkInfo
         }
     }
     HorizontalDivider(Modifier.padding(start = 16.dp))
+}
+
+/** Debug builds only: speak any text with the default voice of a language, through the full speech pipeline. */
+@Composable
+private fun CustomTextRow(langs: List<String>) {
+    val c = LocalContext.current.container
+    val active by c.preview.active.collectAsStateWithLifecycle()
+    var text by remember { mutableStateOf("") }
+    var lang by remember { mutableStateOf(langs.first()) }
+    val voice = c.voices.defaultFor(lang)
+    SectionHeader("Speak custom text (debug)")
+    if (langs.size > 1) {
+        SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+            langs.forEachIndexed { i, l ->
+                SegmentedButton(
+                    selected = lang == l,
+                    onClick = { lang = l },
+                    shape = SegmentedButtonDefaults.itemShape(i, langs.size),
+                ) { Text(l) }
+            }
+        }
+    }
+    Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+        OutlinedTextField(
+            value = text,
+            onValueChange = { text = it },
+            modifier = Modifier.weight(1f),
+            label = { Text(voice?.label ?: "—") },
+            maxLines = 4,
+        )
+        val playing = voice != null && active == c.preview.keyOf(voice, lang)
+        IconButton(
+            enabled = voice != null && text.isNotBlank(),
+            onClick = { if (playing) c.preview.stop() else c.preview.play(voice!!, lang, text) },
+        ) {
+            Icon(if (playing) AppIcons.Pause else Icons.Default.PlayArrow, stringResource(R.string.play))
+        }
+    }
 }
 
 @Composable

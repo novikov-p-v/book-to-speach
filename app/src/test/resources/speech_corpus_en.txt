@@ -1,0 +1,43 @@
+# Numbers, years, dates, times
+He had 3 brothers and 21 sisters.
+In 1812 Napoleon entered Moscow.
+The war lasted from 1939 to 1945.
+The years 1941–1945 changed everything.
+She was born on April 12, 1961.
+Date: 04/12/1961.
+The train leaves at 10:30 and arrives at 7:05.
+The city has 1,000,000 people.
+The budget was $1,250,000,000.
+Prices rose by 15%, then by another 3.5%.
+It cost $5.50, or about £4 and 5 €.
+# Ordinals
+He finished 1st, his brother 22nd, and I came 103rd.
+The 19th century was the age of the novel.
+Chapter IV
+Part II. The Return
+Volume III, Chapter XII.
+King Henry VIII had six wives.
+# Units
+The town is 5 km away and the river 300 m.
+He is 180 cm tall and weighs 75 kg.
+Buy 2 l of milk and 500 g of cheese.
+It was -15 °C outside, or 5 °F.
+The trip took 3 h 20 min.
+# Symbols
+Document No. 42, § 3.
+Formula: 2 + 2 = 4, and 3 × 3 = 9.
+Call +1 555 123-4567.
+ISBN 978-0-14-044913-6
+Smith & Sons, est. 1890.
+# Punctuation, dialogue
+"Hello," he said. "How are you?"
+"Fine… And you?"
+She thought, 'Well, well.'
+He said he'd come... and left.
+It worked (strangely enough).
+# Case, acronyms, links
+NASA and the FBI knew about it.
+NATO and the UN issued a statement.
+WARNING! DO NOT ENTER!
+See https://example.com/page?id=5 or write to info@example.com.
+Mr. Smith met Dr. Jones, e.g. at 5 p.m.

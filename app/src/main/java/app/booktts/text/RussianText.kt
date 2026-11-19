@@ -12,7 +12,7 @@ class SpeechTextPreparer(private val context: Context, private val settings: Set
     private var yoFailed = false
 
     fun prepare(text: String, lang: String): String {
-        val t = Abbreviations.expand(text, lang)
+        val t = textRules(text, lang)
         if (lang != "ru" || !settings.restoreYo) return t
         return russianYo()?.process(t) ?: t
     }
@@ -43,5 +43,8 @@ class SpeechTextPreparer(private val context: Context, private val settings: Set
 
     companion object {
         private const val TAG = "SpeechText"
+
+        /** The pure-Kotlin part of [prepare] (no dictionaries, no settings); unit-testable. */
+        fun textRules(text: String, lang: String): String = Abbreviations.expand(text, lang)
     }
 }

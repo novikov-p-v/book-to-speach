@@ -35,7 +35,8 @@ class VoicePreview(private val settings: Settings, private val speechText: Speec
 
     fun keyOf(voice: Voice, lang: String) = "${voice.ref.encode()}/$lang"
 
-    fun play(voice: Voice, lang: String) {
+    /** Plays the built-in sample sentence, or [customText] (debug: hear how any line is read). */
+    fun play(voice: Voice, lang: String, customText: String? = null) {
         val key = keyOf(voice, lang)
         val old = job
         _active.value = key
@@ -43,8 +44,8 @@ class VoicePreview(private val settings: Settings, private val speechText: Speec
             old?.cancelAndJoin()
             try {
                 engine.load(voice, settings.threadsFor(voice.model.type), espeakPatch.dataDirFor(voice.model))
-                val sampleLang = if (lang in samples) lang else "en"
-                val text = speechText.prepare(samples.getValue(sampleLang), sampleLang)
+                val sampleLang = if (customText != null || lang in samples) lang else "en"
+                val text = speechText.prepare(customText ?: samples.getValue(sampleLang), sampleLang)
                 val pcm = engine.generate(text, voice.sid, settings.speed, sampleLang, settings.qualitySteps)
                 playPcm(pcm, engine.sampleRate)
             } catch (e: CancellationException) {
