@@ -70,25 +70,29 @@ Before each upload, increase `versionCode` (and usually `versionName`) in `app/b
 
 ## 5. Store listing draft
 
-**Title:** Book to Speech — offline reader  (≤ 30 chars: "Book to Speech: offline TTS")
+**Title:**
+- EN (en-US listing): Book to Speech: offline TTS  (≤ 30 chars; or just "Book to Speech")
+- RU (default listing): Книга вслух
 
 **Short description (≤ 80):**
 - EN: Listen to your TXT, FB2 and PDF books. Natural voices, fully offline.
 - RU: Слушайте свои книги TXT, FB2 и PDF. Естественные голоса, без интернета.
 
 **Full description (EN):**
-Book to Speech turns your own e-books into an audiobook — right on your phone, with no internet and no account.
+Book to Speech turns your own e-books into audiobooks right on your phone, with no internet connection and no account.
 
 • Opens TXT (any encoding), FB2 / FB2.ZIP and PDF books
-• Natural neural voices that run entirely on the device: Supertonic (31 languages), Kokoro (English), Piper
-• Russian, English, Ukrainian, German, French, Spanish, Italian, Polish and more
-• Remembers your place; tap any sentence to start reading from it; current sentence highlighted
-• Keeps reading with the screen off; control from the notification, lock screen or headphones
+• Natural neural voices that run entirely on your device: Supertonic (31 languages), Kokoro (English) and Piper
+• English, Russian, Ukrainian, German, French, Spanish, Italian, Polish and more
+• Remembers your place in every book; tap any sentence to start reading from it, and the current sentence is highlighted
+• Keeps reading with the screen off; control playback from the notification, lock screen or headphones
+• Adjustable speed and chapter navigation
 • Export a whole book to audio files (one per chapter) to listen in any player
-• Russian: restores «ё» for correct pronunciation
+• Choose a voice per language or per book, and preview voices before downloading
+• Russian: restores «ё» and improves stress for correct pronunciation
 • No ads, no tracking, open source
 
-Voices are downloaded once (20–350 MB each); after that everything works offline.
+Each voice is downloaded once (20–350 MB). After that, everything works offline, even in airplane mode.
 
 **Full description (RU):**
 «Книга вслух» превращает ваши электронные книги в аудиокнигу прямо на телефоне — без интернета и без регистрации.
